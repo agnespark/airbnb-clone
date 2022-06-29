@@ -40,7 +40,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-    "users.apps.Usersconfig",
+    "users.apps.UsersConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
@@ -125,4 +125,5 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-AUTH_USER_MODEL = 'uers.User'
+AUTH_USER_MODEL = 'users.User'
+
