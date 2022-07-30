@@ -1,12 +1,11 @@
-from statistics import mode
 from django.db import models
 from django_countries.fields import CountryField
 from core import models as core_models
-from users import models as user_models
+
 
 class AbstractItem(core_models.TimeStampedModel):
 
-    """ Abstract Item """
+    """Abstract Item"""
 
     name = models.CharField(max_length=80)
 
@@ -19,28 +18,32 @@ class AbstractItem(core_models.TimeStampedModel):
 
 class RoomType(AbstractItem):
 
-    """ RoomType Object Definition """
+    """RoomType Object Definition"""
+
     class Meta:
         verbose_name = "Room Type"
-        ordering = ['name']
+        ordering = ["name"]
+
 
 class Amenity(AbstractItem):
 
-    """ Amenity Object Definition """
+    """Amenity Object Definition"""
 
     class Meta:
         verbose_name_plural = "Amenities"
 
+
 class Facility(AbstractItem):
 
-    """ Facility Model Definition """
+    """Facility Model Definition"""
 
     class Meta:
         verbose_name_plural = "Facilities"
 
+
 class HouseRule(AbstractItem):
 
-    """ HouseRule Model Definition """
+    """HouseRule Model Definition"""
 
     class Meta:
         verbose_name = "House Rule"
@@ -48,7 +51,7 @@ class HouseRule(AbstractItem):
 
 class Photo(core_models.TimeStampedModel):
 
-    """ Photo  Model Definition """
+    """Photo  Model Definition"""
 
     caption = models.CharField(max_length=80)
     file = models.ImageField()
@@ -60,7 +63,7 @@ class Photo(core_models.TimeStampedModel):
 
 class Room(core_models.TimeStampedModel):
 
-    """ Room Model Definition """
+    """Room Model Definition"""
 
     name = models.CharField(max_length=140, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -70,16 +73,20 @@ class Room(core_models.TimeStampedModel):
     address = models.CharField(max_length=140, null=True, blank=True)
     guests = models.IntegerField(null=True, blank=True)
     beds = models.IntegerField(null=True, blank=True)
-    bedrooms =  models.IntegerField(null=True, blank=True)
+    bedrooms = models.IntegerField(null=True, blank=True)
     baths = models.IntegerField(null=True, blank=True)
     check_in = models.TimeField(null=True, blank=True)
     check_out = models.TimeField(null=True, blank=True)
     instant_book = models.BooleanField(default=False)
-    host = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True)
-    room_type = models.ForeignKey("RoomType", on_delete=models.SET_NULL, null=True, blank=True)
+    host = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, null=True, blank=True
+    )
+    room_type = models.ForeignKey(
+        "RoomType", on_delete=models.SET_NULL, null=True, blank=True
+    )
     amenities = models.ManyToManyField("Amenity", blank=True)
     facilities = models.ManyToManyField("Facility", blank=True)
-    houserule = models.ManyToManyField("HouseRule", blank=True)
+    houserules = models.ManyToManyField("HouseRule", blank=True)
 
     def __str__(self):
         return self.name
