@@ -1,47 +1,40 @@
 from django.contrib import admin
 from . import models
 
+
 @admin.register(models.RoomType, models.Facility, models.Amenity, models.HouseRule)
 class ItemAdmin(admin.ModelAdmin):
 
-    """ Item Admin Definition """
+    """Item Admin Definition"""
 
     list_display = ("name", "used_by")
-    
+
     def used_by(self, obj):
         return obj.rooms.count()
-    
+
     pass
+
 
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
-    """ Room Admin Definition """
+    """Room Admin Definition"""
 
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")}
+            {"fields": ("name", "description", "country", "address", "price")},
         ),
-        (
-            "Times",
-            {"fields": ("check_in", "check_out", "instant_book")}
-        ),
-        (
-            "Spaces",
-            {"fields": ("guests", "beds", "bedrooms", "baths")}
-        ),
+        ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
+        ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
         (
             "More About the Space",
-            {   
-                "classes": ('collapse',),
-                "fields": ("amenities", "facilities", "houserules")
-            }
+            {
+                "classes": ("collapse",),
+                "fields": ("amenities", "facilities", "houserules"),
+            },
         ),
-        (
-            "Last Details",
-            {"fields": ("host",)}
-        ),
+        ("Last Details", {"fields": ("host",)}),
     )
 
     list_display = (
@@ -58,7 +51,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "count_amenities",
         "count_photos",
-        "total_rating",
+        # "total_rating",
     )
 
     list_filter = (
@@ -69,15 +62,12 @@ class RoomAdmin(admin.ModelAdmin):
         "facilities",
         "houserules",
         "city",
-        "country",)
+        "country",
+    )
 
     search_fields = ("=city", "^host__username")
 
-    filter_horizontal = (
-        "amenities",
-        "facilities",
-        "houserules"
-    )
+    filter_horizontal = ("amenities", "facilities", "houserules")
 
     def count_amenities(self, obj):
         return obj.amenities.count()
