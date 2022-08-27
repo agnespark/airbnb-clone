@@ -1,6 +1,6 @@
-# from math import ceil
-# from django.shortcuts import render, redirect
-# from django.core.paginator import Paginator, EmptyPage
+from math import ceil
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator, EmptyPage
 from django.utils import timezone
 from django.views.generic import ListView
 from . import models
@@ -17,11 +17,16 @@ class HomeView(ListView):
     context_object_name = "rooms"
     # page_kwarg = "page"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        now = timezone.now()
-        context["now"] = now
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     now = timezone.now()
+    #     context["now"] = now
+    #     return context
+
+
+def room_detail(request, pk):
+    print(pk)
+    return render(request, "rooms/detail.html")
 
 
 # 2. use paginator
