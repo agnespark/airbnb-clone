@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage
 from django.utils import timezone
 from django.views.generic import ListView
+from django.urls import reverse
 from . import models
 
 # 3. class based view
@@ -25,8 +26,11 @@ class HomeView(ListView):
 
 
 def room_detail(request, pk):
-    print(pk)
-    return render(request, "rooms/detail.html")
+    try:
+        room = models.Room.objects.get(pk=pk)
+        return render(request, "rooms/detail.html", {"room": room})
+    except models.Room.DoesNotExist:
+        return redirect(reverse("core:home"))
 
 
 # 2. use paginator
