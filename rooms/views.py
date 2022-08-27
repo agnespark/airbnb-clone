@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage
 from django.utils import timezone
 from django.views.generic import ListView
+from django.http import Http404
 from django.urls import reverse
 from . import models
 
@@ -30,7 +31,7 @@ def room_detail(request, pk):
         room = models.Room.objects.get(pk=pk)
         return render(request, "rooms/detail.html", {"room": room})
     except models.Room.DoesNotExist:
-        return redirect(reverse("core:home"))
+        raise Http404()
 
 
 # 2. use paginator
