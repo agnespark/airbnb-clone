@@ -1,19 +1,31 @@
-from math import ceil
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage
+# from math import ceil
+# from django.shortcuts import render, redirect
+# from django.core.paginator import Paginator, EmptyPage
+from django.views.generic import ListView
 from . import models
+
+# 3. class based view
+class HomeView(ListView):
+
+    """HomeView Denifition"""
+
+    model = models.Room
+    paginate_by = 10
+    paginate_orphans = 5
+    ordering = "created"
+    # page_kwarg = "page"
 
 
 # 2. use paginator
-def all_rooms(request):
-    page = request.GET.get("page", 1)
-    room_list = models.Room.objects.all()  # 그냥 쿼리셋을 생성할 뿐, 즉시 호출하지는 않음
-    paginator = Paginator(room_list, 10, orphans=5)  # 페이지당 리스트 갯수 = 10
-    try:
-        rooms = paginator.page(int(page))
-        return render(request, "rooms/home.html", {"page": rooms})
-    except EmptyPage:
-        return redirect("/")
+# def all_rooms(request):
+#     page = request.GET.get("page", 1)
+#     room_list = models.Room.objects.all()  # 그냥 쿼리셋을 생성할 뿐, 즉시 호출하지는 않음
+#     paginator = Paginator(room_list, 10, orphans=5)  # 페이지당 리스트 갯수 = 10
+#     try:
+#         rooms = paginator.page(int(page))
+#         return render(request, "rooms/home.html", {"page": rooms})
+#     except EmptyPage:
+#         return redirect("/")
 
 
 # 1. pagination 하드코딩방법
