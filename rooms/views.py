@@ -1,10 +1,12 @@
 from math import ceil
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage
-from django.utils import timezone
-from django.views.generic import ListView
-from django.http import Http404
-from django.urls import reverse
+
+# from django.shortcuts import render, redirect
+# from django.core.paginator import Paginator, EmptyPage
+# from django.utils import timezone
+from django.views.generic import ListView, DetailView
+
+# from django.http import Http404
+# from django.urls import reverse
 from . import models
 
 # 3. class based view
@@ -26,12 +28,21 @@ class HomeView(ListView):
     #     return context
 
 
-def room_detail(request, pk):
-    try:
-        room = models.Room.objects.get(pk=pk)
-        return render(request, "rooms/detail.html", {"room": room})
-    except models.Room.DoesNotExist:
-        raise Http404()
+# 5. class based view - room detail
+class RoomDetail(DetailView):
+
+    """RoomDetail Definition"""
+
+    model = models.Room
+
+
+# 4. function based view - room detail
+# def room_detail(request, pk):
+#     try:
+#         room = models.Room.objects.get(pk=pk)
+#         return render(request, "rooms/detail.html", {"room": room})
+#     except models.Room.DoesNotExist:
+#         raise Http404()
 
 
 # 2. use paginator
