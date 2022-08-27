@@ -5,9 +5,12 @@
 {% endblock page_name %}
 
 
+
 {% block content %}
 
-    {% for room in object_list %}
+    {{now}}
+
+    {% for room in rooms %}
         <h1> {{room.name}} / ${{room.price}} </h1>
     {% endfor %}
 
@@ -29,9 +32,28 @@
 
 
 
+{% comment %} 2. class based view part one
+{% block content %}
+
+    {% for room in object_list %}
+        <h1> {{room.name}} / ${{room.price}} </h1>
+    {% endfor %}
+
+    <h5>
+    {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}">Previous</a>
+    {% endif %}
+
+    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">Next</a>
+    {% endif %}
 
 
+    </h5>
 
+{% endblock content %} {% endcomment %}
 
 
 {% comment %} 1. function based view에 사용한 template
