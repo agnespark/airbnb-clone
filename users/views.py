@@ -11,7 +11,7 @@ class LoginView(FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
-    success_url = reverse_lazy("core:home")
+    success_url = reverse_lazy("core:home")  # lazy : 요청시, 해당 url로 접속함
     initial = {"email": "asdf@mail.com"}
 
     def form_valid(self, form):
@@ -44,3 +44,14 @@ class LoginView(FormView):
 def log_out(request):
     logout(request)
     return redirect(reverse("core:home"))
+
+
+class SignUpView(FormView):
+    template_name = "users/signup.html"
+    form_class = forms.SignUpForm
+    success_url = reverse_lazy("core:home")
+    initial = {
+        "first_name": "Nicolas",
+        "last_name": "Serr",
+        "email": "asdf@mail.com",
+    }
