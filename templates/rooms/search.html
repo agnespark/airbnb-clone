@@ -12,6 +12,18 @@
     <h2>Search!</h2>
 
     <form method="get" action="{% url 'rooms:search' %}">
+        {{form.as_p}}
+        <button>Search</button>
+    </form>
+
+     <h3>Results</h3>
+
+    {% for room in rooms %}
+        <h3>{{room.name}}</h3>
+    {% endfor %}
+
+ {% comment %} 1. form 사용하지 않는 방법 {% endcomment %}
+    {% comment %} <form method="get" action="{% url 'rooms:search' %}">
         <div>
             <label for="city">City</label>
             <input value="{{city}}" id="city" name="city" placeholder="Search by City" />
@@ -140,6 +152,6 @@
             <h3>{{room.name}}</h3>
         {% endfor %}
 
-    </form>
+    </form> {% endcomment %}
 
 {% endblock content %}
