@@ -70,10 +70,10 @@ class SignUpForm(forms.ModelForm):
             return password
 
     def save(self, *args, **kwargs):
-        username = self.cleaned_data.get("username")
+        email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
         user = super().save(commit=False)
-        user.username = username
+        user.username = email
         user.set_password(password)
         user.save()
 
