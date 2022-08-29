@@ -1,6 +1,7 @@
 from math import ceil
 import queue
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 
 # from django.core.paginator import Paginator, EmptyPage
 # from django.utils import timezone
@@ -65,7 +66,7 @@ class SearchView(View):
                 facilities = form.cleaned_data.get("facilities")
 
                 filter_args = {}
-                rooms = models.Room.objects.filter(**filter_args)
+                qs = rooms.order_by("created")
 
                 if city != "Anywhere":
                     filter_args["city__startswith"] = city
@@ -102,10 +103,20 @@ class SearchView(View):
                 for facility in facilities:
                     rooms = rooms.filter(facilities=facility)
 
+                paginator = Paginator(qs, 10, orphans=5)
+
+                page = request.GET.get("page", 1)
+
+                rooms = paginator.get_page(page)
+
+                return render(
+                    request, "rooms/search.html", {"form": form, "rooms": rooms}
+                )
+
         else:
             form = forms.SearchForm()
 
-        return render(request, "rooms/search.html", {"form": form, "rooms": rooms})
+        return render(request, "rooms/search.html", {"form": form})
 
 
 # form 사용하지 않는 코드
