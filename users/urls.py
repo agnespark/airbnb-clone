@@ -11,6 +11,12 @@ urlpatterns = [
         views.github_callback,
         name="github-callbacklogin",
     ),
+    path("login/kakao", views.kakao_login, name="kakao-login"),
+    path(
+        "login/kakao/callback",
+        views.kakao_callback,
+        name="kakao-callbacklogin",
+    ),
     path("logout", views.log_out, name="logout"),
     path("signup", views.SignUpView.as_view(), name="signup"),
     path("verify/<str:key>", views.complete_verification, name="complete-verification"),
