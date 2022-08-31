@@ -18,8 +18,8 @@
                     <img class="w-8" src="{% static 'img/logo.png' %}" />
                 </a>
                 {% block search-bar %}
-                    <form method="get" action="{% url 'rooms:search' %}">
-                        <input class="h-1 text-xs py-5 px-2 border rounded-sm pl-3" font value="" name="city" placeholder="Search by City" />
+                    <form method="get" action="{% url 'rooms:search' %}" class="w-11/12">
+                        <input class="transition ease-linear duration-200 h-1 w-64 text-sm font-medium placeholder-gray-600 py-5 px-2 border rounded-sm pl-3 shadow-md hover:shadow-lg border-gray-400 focus:outline-none" font value="" name="city" placeholder="Search by City"/>
                     </form>
                 {% endblock search-bar %}
             </div>
