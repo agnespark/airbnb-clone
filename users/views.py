@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from . import forms, models
 
 
@@ -207,4 +208,5 @@ def kakao_callback(request):
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException:
+        messages.error(request, "Somthing went wrong")
         return redirect(reverse("users:login"))
